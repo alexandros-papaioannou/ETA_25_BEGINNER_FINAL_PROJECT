@@ -25,8 +25,15 @@ public class LoginPage extends MasterPage {
     @FindBy(xpath = "//h5[@class='oxd-text oxd-text--h5 orangehrm-login-title']")
     private WebElement loginHeader;
 
+    @FindBy(xpath = "//p[@class='oxd-text oxd-text--p oxd-alert-content-text']")
+    private WebElement invalidLoginMessage;
+
     public String getLoginHeader() {
         return getTextFromElement(loginHeader);
+    }
+
+    public String getInvalidLoginMessage() {
+        return getTextFromElement(invalidLoginMessage);
     }
 
     public boolean isUserNameFieldDisplayed() {

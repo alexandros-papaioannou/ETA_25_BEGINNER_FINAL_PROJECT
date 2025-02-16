@@ -18,7 +18,19 @@ public class LoginTests extends BaseTest {
                 ConfigReader.getProperty("username"),
                 ConfigReader.getProperty("password")
         );
+
         Assert.assertTrue(dashboard.isDashboardHeaderDisplayed());
         Assert.assertEquals(dashboard.getDashboardHeader(),"Dashboard");
+    }
+
+    @Test
+    public void invalidLogin() {
+        loginPage.enterUsername("Admin");
+        loginPage.enterPassword("WrongPassword");
+        loginPage.clickLoginButton();
+
+        String expectedErrorMessage = "Invalid credentials";
+
+        Assert.assertEquals(loginPage.getInvalidLoginMessage(),expectedErrorMessage);
     }
 }
