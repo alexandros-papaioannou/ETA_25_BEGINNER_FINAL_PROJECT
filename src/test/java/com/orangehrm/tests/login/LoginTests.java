@@ -1,4 +1,4 @@
-package com.orangehrm.tests;
+package com.orangehrm.tests.login;
 
 import com.orangehrm.base.BaseTest;
 import com.orangehrm.pages.DashboardPage;
@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 public class LoginTests extends BaseTest {
 
     @Test
+    //Verify successful login with correct username and password.
     public void loginSuccessfully() {
         Assert.assertEquals(loginPage.getLoginHeader(), "Login");
         Assert.assertTrue(loginPage.isUserNameFieldDisplayed());
@@ -24,6 +25,7 @@ public class LoginTests extends BaseTest {
     }
 
     @Test
+    //Verify error message when using wrong credentials to login.
     public void invalidLogin() {
         loginPage.enterUsername("Admin");
         loginPage.enterPassword("WrongPassword");

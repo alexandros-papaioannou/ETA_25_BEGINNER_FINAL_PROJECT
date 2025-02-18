@@ -1,5 +1,7 @@
 package com.orangehrm.pages;
 
+import net.bytebuddy.description.type.TypeDescription;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -15,8 +17,17 @@ public class MasterPage {
 
     public MasterPage(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(60));
         PageFactory.initElements(driver, this);
+    }
+
+    public void waitForElementPresence(WebElement element) {
+        wait.until(ExpectedConditions.presenceOfElementLocated((By) element));
+    }
+
+    public void waitForTextToBeVisibleInElement(WebElement element) {
+        wait.until(ExpectedConditions.visibilityOf(element));
+        wait.until(driver -> !element.getText().trim().isEmpty());
     }
 
     public void waitForElementToBeVisible(WebElement element) {
@@ -38,7 +49,7 @@ public class MasterPage {
         element.click();
     }
 
-    public String getTextFromElement(WebElement element) {
+    public String getTextFromElement(WebElement element)  {
         waitForElementToBeVisible(element);
         return element.getText();
     }
@@ -46,5 +57,18 @@ public class MasterPage {
     public boolean isWebElementDisplayed(WebElement element) {
         waitForElementToBeVisible(element);
         return element.isDisplayed();
+    }
+
+    public boolean isTextVisibleInWebElement(WebElement element) {
+        waitForTextToBeVisibleInElement(element);
+        return true;
+    }
+
+    public static void delay(int milliseconds) {
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
