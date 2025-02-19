@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 
 public class LoginTests extends BaseTest {
 
-    @Test
+    @Test (priority = 1)
     //Verify successful login with correct username and password.
     public void loginSuccessfully() {
         Assert.assertEquals(loginPage.getLoginHeader(), "Login");
@@ -24,7 +24,7 @@ public class LoginTests extends BaseTest {
         Assert.assertEquals(dashboard.getDashboardHeader(),"Dashboard");
     }
 
-    @Test
+    @Test (priority = 2)
     //Verify error message when using wrong credentials to login.
     public void invalidLogin() {
         loginPage.enterUsername("Admin");

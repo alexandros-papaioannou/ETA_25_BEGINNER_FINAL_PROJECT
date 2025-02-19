@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
+import java.util.Random;
 
 public class PimPage extends MasterPage {
 
@@ -198,6 +199,19 @@ public class PimPage extends MasterPage {
     @FindBy(xpath = "//label[text()=\"License Expiry Date\"]/parent::div/following-sibling::div//input")
     private WebElement personalDetailsTabLicenseExpiryDateField;
 
+    @FindBy(xpath = "//label[text()=\"Date of Birth\"]/parent::div/following-sibling::div//input")
+    private WebElement personalDetailsTabDateOfBirthField;
+
+    @FindBy(xpath = "//label[text()='Male']")
+    //@FindBy(xpath = "//input[@type='radio' and contains(@value, '1')]")
+    private WebElement personalDetailsTabGenderMaleRadioButton;
+
+    @FindBy(xpath = "//label[normalize-space()='Male']/input[@type='radio']")
+    private WebElement maleRadioButton;
+
+    @FindBy(xpath = "//label[text()='Female']")
+    private WebElement personalDetailsTabGenderFemaleRadioButton;
+
     @FindBy(xpath = "//label[text()='Nationality']/following::div[contains(@class, 'oxd-select-text')][1]")
     private WebElement personalDetailsTabNationalityDropDown;
 
@@ -218,6 +232,36 @@ public class PimPage extends MasterPage {
 
     @FindBy(xpath = "//div[contains(@class, 'oxd-table-body')]//div[contains(@class, 'oxd-table-row')]")
     private List<WebElement> employees;
+
+    @FindBy(xpath = "//i[@class='oxd-icon bi-trash']")
+    private List<WebElement> deleteButtons;
+
+    @FindBy(xpath = "//label[text()='Username']/following::input[1]")
+    private WebElement userNameField;
+
+    @FindBy(xpath = "//label[text()='Enabled']")
+    private WebElement enabledRadioButton;
+
+    @FindBy(xpath = "//label[text()='Disabled']")
+    private WebElement disabledRadioButton;
+
+    @FindBy(xpath = "//label[text()='Password']/following::input[1]")
+    private WebElement passWordField;
+
+    @FindBy(xpath = "//label[text()='Confirm Password']/following::input[1]")
+    private WebElement confirmPassWordField;
+
+    @FindBy(xpath = "//button[@class='oxd-button oxd-button--medium oxd-button--label-danger orangehrm-button-margin']")
+    private WebElement confirmDeleteButton;
+
+    @FindBy(xpath = "//span[@class='oxd-text oxd-text--span']")
+    private WebElement searchResultsMessage;
+
+    @FindBy(xpath = "//p[@class='oxd-text oxd-text--p oxd-text--card-title']")
+    private WebElement confirmDeleteModalPageTitle;
+
+    @FindBy(xpath = "//p[@class='oxd-text oxd-text--p oxd-text--card-body']")
+    private WebElement confirmDeleteModalPageMessage;
 
     public String getPimPageHeader() {
         return getTextFromElement(pimHeader);
@@ -391,6 +435,10 @@ public class PimPage extends MasterPage {
         click(personalDetailsTabNationalityDropDown);
     }
 
+    public String getPersonalDetailsTabNationalityDropDown() {
+        return getTextFromElement(personalDetailsTabNationalityDropDown);
+    }
+
     public void clickRomanianNationalityPersonalDetailsTab() {
         click(personalDetailsTabNationalityOptionRomanian);
     }
@@ -401,6 +449,10 @@ public class PimPage extends MasterPage {
 
     public void clickPersonalDetailsTabMaritalStatusDropDown() {
         click(personalDetailsTabMaritalStatusDropDown);
+    }
+
+    public String getPersonalDetailsTabMaritalStatusDropDown() {
+        return getTextFromElement(personalDetailsTabMaritalStatusDropDown);
     }
 
     public void clickSingleMaritalStatusPersonalDetailsTab() {
@@ -436,13 +488,11 @@ public class PimPage extends MasterPage {
     }
 
     public String getPersonalDetailsTabTitle() {
-        //waitForTextElementToBeVisible(personalDetailsTabTitle, "DavaFirst DavaLast");
         return getTextFromElement(personalDetailsTabTitle);
     }
 
     public String getPersonalDetailsTabFirstNameField() {
-       return personalDetailsTabFirstNameField.getAttribute("value");
-       //return personalDetailsTabFirstNameField.getDomAttribute("value");
+        return personalDetailsTabFirstNameField.getAttribute("value");
     }
 
     public String getPersonalDetailsTabMiddleNameField() {
@@ -451,7 +501,7 @@ public class PimPage extends MasterPage {
 
     public String getPersonalDetailsTabLastNameField() {
         return personalDetailsTabLastNameField.getAttribute("value");
-       // return getTextFromElement(personalDetailsTabLastNameField);
+        // return getTextFromElement(personalDetailsTabLastNameField);
     }
 
     public String getPersonalDetailsTabEmployeeIdField() {
@@ -463,11 +513,19 @@ public class PimPage extends MasterPage {
     }
 
     public String getPersonalDetailsTabDriverLicenseNumberField() {
-        return getTextFromElement(personalDetailsTabDriverLicenseNumberField);
+        return personalDetailsTabDriverLicenseNumberField.getAttribute("value");
+    }
+
+    public String getPersonalDetailsTabLicenseExpiryDateField() {
+        return personalDetailsTabLicenseExpiryDateField.getAttribute("value");
     }
 
     public void enterPersonalDetailsTabLicenseExpiryDateField(String expiry) {
         set(personalDetailsTabLicenseExpiryDateField, expiry);
+    }
+
+    public String getPersonalDetailsTabDateOfBirthField() {
+        return personalDetailsTabDateOfBirthField.getAttribute("value");
     }
 
     public boolean isPersonalDetailsTabFirstNameFieldTextDisplayed() {
@@ -496,5 +554,92 @@ public class PimPage extends MasterPage {
 
     public void clickInEmployeesList(int index) {
         click(employees.get(index));
+    }
+
+    public void clickDeleteButton(int index) {
+        click(deleteButtons.get(index));
+    }
+
+    public void clickCreateLoginDetailsSwitchButton() {
+        click(createLoginDetailsSwitchButton);
+    }
+
+    public void clickUserNameField() {
+        click(userNameField);
+    }
+
+    public void enterUserNameField(String username) {
+        set(userNameField, username);
+    }
+
+    public void clickEnabledRadioButton() {
+        click(enabledRadioButton);
+    }
+
+    public void clickDisabledRadioButton() {
+        click(disabledRadioButton);
+    }
+
+    public void enterPassWordField(String pass) {
+        set(passWordField, pass);
+    }
+
+    public void enterConfirmPassWordField(String confPass) {
+        set(confirmPassWordField, confPass);
+    }
+
+    public String getTextFromUserNameField() {
+        return userNameField.getAttribute("value");
+    }
+
+    public String generateUniqueUsername(String fName, String lName) {
+        Random rand = new Random();
+        Integer randomNum = rand.nextInt(9000) + 1000;
+        //String baseUserName = "testUser";
+        return fName.substring(0, 1) + lName.substring(0, 1) + randomNum.toString();
+    }
+
+    public void enterUniqueUserName(String userName) {
+        set(userNameField, userName);
+    }
+
+    public void enterPersonalDetailsTabDriverLicenseNumberField(String driverLicense) {
+        set(personalDetailsTabDriverLicenseNumberField, driverLicense);
+    }
+
+    public void enterPersonalDetailsTabDateOfBirthField(String birthDate) {
+        set(personalDetailsTabDateOfBirthField, birthDate);
+    }
+
+    public void clickPersonalDetailsTabGenderMaleRadioButton() {
+        click(personalDetailsTabGenderMaleRadioButton);
+    }
+
+    public boolean isPersonalDetailsTabGenderMaleRadioButtonSelected() {
+        return isRadioButtonSelected(personalDetailsTabGenderMaleRadioButton);
+    }
+
+    public boolean isMaleRadioButtonSelected() {
+        return isRadioButtonSelected(maleRadioButton);
+    }
+
+    public void clickConfirmDeleteButton() {
+        click(confirmDeleteButton);
+    }
+
+    public String getSearchResultsMessage() {
+        return getTextFromElement(searchResultsMessage);
+    }
+
+    public void clearEmployeeNameSearchField() {
+        clearTextField(employeeNameField);
+    }
+
+    public String getConfirmDeleteModalPageTitle() {
+        return getTextFromElement(confirmDeleteModalPageTitle);
+    }
+
+    public String getConfirmDeleteModalPageMessage() {
+        return getTextFromElement(confirmDeleteModalPageMessage);
     }
 }

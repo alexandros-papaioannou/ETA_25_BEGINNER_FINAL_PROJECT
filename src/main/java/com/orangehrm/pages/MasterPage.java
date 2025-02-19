@@ -2,6 +2,7 @@ package com.orangehrm.pages;
 
 import net.bytebuddy.description.type.TypeDescription;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -62,6 +63,16 @@ public class MasterPage {
     public boolean isTextVisibleInWebElement(WebElement element) {
         waitForTextToBeVisibleInElement(element);
         return true;
+    }
+
+    public boolean isRadioButtonSelected(WebElement element) {
+        return element.isSelected();
+    }
+
+    public void clearTextField(WebElement element) {
+        waitForElementToBeVisible(element);
+        element.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        element.sendKeys(Keys.BACK_SPACE);
     }
 
     public static void delay(int milliseconds) {

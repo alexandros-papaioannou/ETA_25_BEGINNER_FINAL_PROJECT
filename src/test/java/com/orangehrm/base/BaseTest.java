@@ -26,8 +26,8 @@ public class BaseTest {
         pimPage = new PimPage(driver);
     }
 
-//    @AfterMethod
-//    public void tearDown() {
-//        WebDriverManager.closeDriver();
-//    }
+    @AfterMethod
+    public void tearDown() {
+        WebDriverManager.closeDriver();
+    }
 }
